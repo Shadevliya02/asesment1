@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Asesment1</string>
+    <string name="app_name">Calculator</string>
+    <string name="calculate_intro">This calculator helps you perform basic mathematical operations (add, subtract, multiply, divide). Enter two numbers and select the desired operation.</string>
+    <string name="input_1">Input 1</string>
+    <string name="input_2">Input 2</string>
+    <string name="add">Add</string>
+    <string name="subtract">Subtract</string>
+    <string name="multiply">Multiply</string>
+    <string name="divide">Divide</string>
+    <string name="hitung">Calculate</string>
+    <string name="result">Result: %1$s</string>
+    <string name="input_invalid">Invalid input, please ensure the entered numbers are correct.</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">Input 1: %1$s\nInput 2: %2$s\nOperation: %3$s\n\nResult: %4$.2f</string>
+    <string name="tentang_aplikasi">About the App</string>
+    <string name="copyright">This calculator was created to help users perform basic mathematical operations on the numbers entered.\n\nThis app was made for the Mobile Programming class 1.\n\nCopyright © 2024–2025 Sharla Devrina Aurelliya. \nAll rights reserved.</string>
+    <string name="kembali">Back</string>
 </resources>

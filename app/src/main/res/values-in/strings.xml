@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kalkulator</string>
+    <string name="calculate_intro">Kalkulator ini dapat membantu kamu untuk melakukan operasi matematika dasar (tambah, kurang, kali, bagi). Masukkan dua angka dan pilih operasi yang diinginkan.</string>
+    <string name="input_1">Inputan 1</string>
+    <string name="input_2">Inputan 2</string>
+    <string name="add">Tambah</string>
+    <string name="subtract">Kurang</string>
+    <string name="multiply">Kali</string>
+    <string name="divide">Bagi</string>
+    <string name="hitung">Hitung</string>
+    <string name="result">Hasil: %1$s</string>
+    <string name="input_invalid">Masukan tidak valid, pastikan angka yang dimasukkan benar.</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Input 1: %1$s\\nInput 2: %2$s\\nOperasi: %3$s\\n\\nHasil: %4$.2f</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="copyright">Kalkulator ini dibuat untuk membantu pengguna melakukan operasi matematika dasar pada angka-angka yang dimasukkan.\\n\\nAplikasi ini dibuat untuk kelas Pemrograman untuk Perangkat Bergerak 1.\\n\\nCopyright © 2024–2025 Sharla Devrina Aurelliya. \\nAll rights reserved.</string>
+    <string name="kembali">Kembali</string>
+</resources>
