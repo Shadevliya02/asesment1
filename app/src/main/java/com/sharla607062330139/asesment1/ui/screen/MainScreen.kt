@@ -52,10 +52,9 @@ fun MainScreen(navController: NavHostController) {
     )
     var operation by rememberSaveable { mutableIntStateOf(operationOptions[0]) }
     var result by rememberSaveable { mutableFloatStateOf(0f) }
-    var language by rememberSaveable { mutableStateOf("ENG") } // Track language state
+    var language by rememberSaveable { mutableStateOf("ENG") }
     val context = LocalContext.current
 
-    // Change language based on the selected option
     val configuration = LocalConfiguration.current
     val currentLocale = if (language == "ENG") Locale("en") else Locale("in")
     val newConfig = configuration.apply {
@@ -105,7 +104,6 @@ fun MainScreen(navController: NavHostController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         }
-                        // Switch for language selection
                         Switch(
                             checked = language == "IND",
                             onCheckedChange = { isChecked ->
