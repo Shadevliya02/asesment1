@@ -1,6 +1,5 @@
 package com.sharla607062330139.asesment1.ui.screen
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -37,16 +36,15 @@ import com.sharla607062330139.asesment1.navigation.Screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
-    // Define the necessary state variables here
     var input1 by rememberSaveable { mutableStateOf("") }
-    val input1Error by rememberSaveable { mutableStateOf(false) }
+    var input1Error by rememberSaveable { mutableStateOf(false) }
     var input2 by rememberSaveable { mutableStateOf("") }
-    val input2Error by rememberSaveable { mutableStateOf(false) }
+    var input2Error by rememberSaveable { mutableStateOf(false) }
     val operationOptions = listOf(
-        R.drawable.tambah, // Add
-        R.drawable.kurang, // Subtract
-        R.drawable.kali,   // Multiply
-        R.drawable.bagi    // Divide
+        R.drawable.tambah,
+        R.drawable.kurang,
+        R.drawable.kali,
+        R.drawable.bagi
     )
     var operation by rememberSaveable { mutableIntStateOf(operationOptions[0]) }
     var result by rememberSaveable { mutableFloatStateOf(0f) }
@@ -71,10 +69,10 @@ fun MainScreen(navController: NavHostController) {
                         }
                         IconButton(onClick = {
                             val operationName = when (operation) {
-                                R.drawable.tambah -> "Tambah"
-                                R.drawable.kurang -> "Kurang"
-                                R.drawable.kali -> "Kali"
-                                R.drawable.bagi -> "Bagi"
+                                R.drawable.tambah -> "Add"
+                                R.drawable.kurang -> "Subtract"
+                                R.drawable.kali -> "Multiply"
+                                R.drawable.bagi -> "Divide"
                                 else -> "Unknown"
                             }
 
@@ -83,10 +81,7 @@ fun MainScreen(navController: NavHostController) {
                                 input1, input2, operationName, result
                             )
 
-                            shareData(
-                                context = context,
-                                message = message
-                            )
+                            shareData(context, message)
                         }) {
                             Icon(
                                 imageVector = Icons.Outlined.Share,
@@ -99,7 +94,6 @@ fun MainScreen(navController: NavHostController) {
             )
         }
     ) { innerPadding ->
-        // Pass state variables to ScreenContent
         ScreenContent(
             modifier = Modifier.padding(innerPadding),
             input1 = input1,
@@ -112,12 +106,20 @@ fun MainScreen(navController: NavHostController) {
             onInput1Change = { input1 = it },
             onInput2Change = { input2 = it },
             onOperationChange = { operation = it },
-            onResultChange = { result = it }
+            onResultChange = { result = it },
+            onInput1ErrorChange = { input1Error = it },
+            onInput2ErrorChange = { input2Error = it },
+            onReset = {
+                input1 = ""
+                input2 = ""
+                result = 0f
+                input1Error = false
+                input2Error = false
+            }
         )
     }
 }
 
-@SuppressLint("StringFormatMatches")
 @Composable
 fun ScreenContent(
     modifier: Modifier,
@@ -131,7 +133,10 @@ fun ScreenContent(
     onInput1Change: (String) -> Unit,
     onInput2Change: (String) -> Unit,
     onOperationChange: (Int) -> Unit,
-    onResultChange: (Float) -> Unit
+    onResultChange: (Float) -> Unit,
+    onInput1ErrorChange: (Boolean) -> Unit,
+    onInput2ErrorChange: (Boolean) -> Unit,
+    onReset: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -178,7 +183,7 @@ fun ScreenContent(
         Row(
             modifier = Modifier
                 .padding(top = 6.dp)
-                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+                .border(1.dp, Color.Transparent, RoundedCornerShape(4.dp))
         ) {
             operationOptions.forEach { drawable ->
                 OperationOptionImage(
@@ -192,20 +197,36 @@ fun ScreenContent(
             }
         }
 
-        Button(
-            onClick = {
-                val input1ErrorLocal = (input1 == "" || input1.toFloatOrNull() == null)
-                val input2ErrorLocal = (input2 == "" || input2.toFloatOrNull() == null)
-                if (input1ErrorLocal || input2ErrorLocal) return@Button
-
-                onResultChange(calculateResult(input1.toFloat(), input2.toFloat(), operation))
-            },
-            modifier = Modifier.padding(top = 8.dp),
-            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(top = 8.dp)
         ) {
-            Text(text = stringResource(R.string.hitung))
-        }
+            Button(
+                onClick = {
+                    val input1ErrorLocal = (input1 == "" || input1.toFloatOrNull() == null)
+                    val input2ErrorLocal = (input2 == "" || input2.toFloatOrNull() == null)
 
+                    onInput1ErrorChange(input1ErrorLocal)
+                    onInput2ErrorChange(input2ErrorLocal)
+
+                    if (input1ErrorLocal || input2ErrorLocal) return@Button
+
+                    onResultChange(calculateResult(input1.toFloat(), input2.toFloat(), operation))
+                },
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.hitung))
+            }
+
+            Button(
+                onClick = {
+                    onReset()
+                },
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(R.string.reset))
+            }
+        }
 
         if (result != 0f) {
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))

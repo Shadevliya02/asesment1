@@ -11,8 +11,18 @@
     <string name="result">Result: %1$s</string>
     <string name="input_invalid">Invalid input, please ensure the entered numbers are correct.</string>
     <string name="bagikan">Share</string>
-    <string name="bagikan_template">Input 1: %1$s\nInput 2: %2$s\nOperation: %3$s\n\nResult: %4$.2f</string>
+    <string name="bagikan_template">Input 1 : %1$s\nInput 2 : %2$s\nOperation : %3$s\n\nResult : %4$.2f</string>
     <string name="tentang_aplikasi">About the App</string>
-    <string name="copyright">This calculator was created to help users perform basic mathematical operations on the numbers entered.\n\nThis app was made for the Mobile Programming class 1.\n\nCopyright © 2024–2025 Sharla Devrina Aurelliya. \nAll rights reserved.</string>
+    <string name="copyright">
+    Developed as part of the Mobile Programming class,
+    this calculator helps users perform basic mathematical operations on their inputs.
+
+    Designed with simplicity and efficiency in mind,
+    it provides an easy-to-use interface to add, subtract, multiply, and divide numbers.
+
+    © 2024–2025 Sharla Devrina Aurelliya. All rights reserved.
+    </string>
     <string name="kembali">Back</string>
+    <string name="reset">Reset</string>
+
 </resources>
