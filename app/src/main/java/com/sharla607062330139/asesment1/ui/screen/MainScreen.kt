@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sharla607062330139.asesment1.ui.screen
 
 import android.content.Context
@@ -21,6 +23,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sharla607062330139.asesment1.ui.theme.Asesment1Theme
 import com.sharla607062330139.asesment1.R
 import com.sharla607062330139.asesment1.navigation.Screen
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +52,16 @@ fun MainScreen(navController: NavHostController) {
     )
     var operation by rememberSaveable { mutableIntStateOf(operationOptions[0]) }
     var result by rememberSaveable { mutableFloatStateOf(0f) }
+    var language by rememberSaveable { mutableStateOf("ENG") } // Track language state
     val context = LocalContext.current
+
+    // Change language based on the selected option
+    val configuration = LocalConfiguration.current
+    val currentLocale = if (language == "ENG") Locale("en") else Locale("in")
+    val newConfig = configuration.apply {
+        setLocale(currentLocale)
+    }
+    context.resources.updateConfiguration(newConfig, context.resources.displayMetrics)
 
     Scaffold(
         topBar = {
@@ -59,7 +72,10 @@ fun MainScreen(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary
                 ),
                 actions = {
-                    Row {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         IconButton(onClick = { navController.navigate(Screen.About.route) }) {
                             Icon(
                                 imageVector = Icons.Outlined.Info,
@@ -69,11 +85,11 @@ fun MainScreen(navController: NavHostController) {
                         }
                         IconButton(onClick = {
                             val operationName = when (operation) {
-                                R.drawable.tambah -> "Add"
-                                R.drawable.kurang -> "Subtract"
-                                R.drawable.kali -> "Multiply"
-                                R.drawable.bagi -> "Divide"
-                                else -> "Unknown"
+                                R.drawable.tambah -> if (language == "ENG") "Add" else "Tambah"
+                                R.drawable.kurang -> if (language == "ENG") "Subtract" else "Kurang"
+                                R.drawable.kali -> if (language == "ENG") "Multiply" else "Kali"
+                                R.drawable.bagi -> if (language == "ENG") "Divide" else "Bagi"
+                                else -> if (language == "ENG") "Unknown" else "Tidak Dikenal"
                             }
 
                             val message = context.getString(
@@ -89,6 +105,15 @@ fun MainScreen(navController: NavHostController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         }
+                        // Switch for language selection
+                        Switch(
+                            checked = language == "IND",
+                            onCheckedChange = { isChecked ->
+                                language = if (isChecked) "IND" else "ENG"
+                            },
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                        Text(text = if (language == "IND") "IND" else "ENG")
                     }
                 }
             )
